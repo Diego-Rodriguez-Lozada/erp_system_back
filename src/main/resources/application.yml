@@ -1,0 +1,56 @@
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false
+      close-closeable: true
+      flush-after-write-value: true
+      write-date-keys-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/erp_system
+    username: root
+    password: admin
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+      schema-locations: classpath:/data/schema.sql
+      #data-locations: classpath:/data/data.sql
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: diegorguezloz@gmail.com
+    password: yvys gptm dlvb fgpg
+    default-encoding: UTF-8
+    properties:
+      mail:
+        mime:
+          charset: UTF
+        smtp:
+          writetimeout: 10000
+          connectiontimeout: 10000
+          timeout: 10000
+          auth: true
+          starttls:
+            enabled: true
+            required: true
+    verify:
+      host: http://localhost:5173
+jwt:
+  expiration: 432_000_000
+  secret: CAD1D5418C9C95A521637D17B2F7458A3417B8E66421D45FC9A3EAD200FDB38682DF5CC2B72C1ABF8A6135353E03920893279DD7C785B1FBDDAAD81E9AA0F7C7
