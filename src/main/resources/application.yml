@@ -30,7 +30,7 @@ spring:
       mode: always
       continue-on-error: false
       schema-locations: classpath:/data/schema.sql
-      #data-locations: classpath:/data/data.sql
+      data-locations: classpath:/data/data.sql
   mail:
     host: smtp.gmail.com
     port: 587

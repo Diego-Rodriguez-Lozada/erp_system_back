@@ -74,4 +74,5 @@ public class Constants {
     public static final String[] PUBLIC_URLS = { "/user/resetpassword/reset/**", "/user/verify/resetpassword/**", "/user/resetpassword/**", "/user/verify/qrcode/**", "/user/login/**", "/user/verify/account/**", "/user/register/**", "/user/new/password/**", "/user/verify/**", "/user/resetpassword/**", "/user/image/**", "/user/verify/password/**" };
     public static final String BASE_PATH = "/**";
     public static final String FILE_NAME = "File-Name";
+    public static final int STRENGTH = 12;
 }

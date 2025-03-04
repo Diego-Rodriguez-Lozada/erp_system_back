@@ -17,5 +17,6 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class RoleEntity extends Auditable {
     private String name;
+    @Column(columnDefinition = "TEXT")
     private Authority authorities;
 }
