@@ -44,11 +44,10 @@ public abstract class Auditable {
 
     @PrePersist
     public void beforePersist() {
-        /*var userId = RequestContext.getUserId();
+        var userId = RequestContext.getUserId();
         if (userId == null) {
             throw new ApiException("No se puede persistir en entidad sin ID de usuario en requestContext para este hilo.");
-        }*/
-        var userId = 0L;
+        }
         setCreatedAt(LocalDateTime.now());
         setCreatedBy(userId);
         setUpdatedBy(userId);
@@ -57,11 +56,10 @@ public abstract class Auditable {
 
     @PreUpdate
     public void beforeUpdate() {
-        /*var userId = RequestContext.getUserId();
+        var userId = RequestContext.getUserId();
         if (userId == null) {
             throw new ApiException("No se puede actualizar la entidad sin ID de usuario en requestContext para este hilo.");
-        }*/
-        var userId = 0L;
+        }
         setUpdatedAt(LocalDateTime.now());
         setUpdatedBy(userId);
     }

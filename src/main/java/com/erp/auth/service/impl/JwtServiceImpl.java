@@ -52,8 +52,8 @@ public class JwtServiceImpl extends JwtConfiguration implements JwtService {
             Optional.of(Arrays.stream(request.getCookies() == null ? new Cookie[]{new Cookie(Constants.EMPTY_VALUE, Constants.EMPTY_VALUE)} : request.getCookies())
                     .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
                     .map(Cookie::getValue)
-                    .findAny()
-                    .orElse(Constants.EMPTY_VALUE));
+                    .findAny())
+                    .orElse(Optional.empty());
 
     private final BiFunction<HttpServletRequest, String, Optional<Cookie>> extractCookie = (request, cookieName) ->
             Optional.of(Arrays.stream(request.getCookies() == null ? new Cookie[]{new Cookie(Constants.EMPTY_VALUE, Constants.EMPTY_VALUE)} : request.getCookies())
@@ -69,7 +69,7 @@ public class JwtServiceImpl extends JwtConfiguration implements JwtService {
                     .id(UUID.randomUUID().toString())
                     .issuedAt(Date.from(Instant.now()))
                     .notBefore(new Date())
-                    .signWith(key.get(), Jwts.SIG.HS256);
+                    .signWith(key.get(), Jwts.SIG.HS512);
 
     private final BiFunction<User, TokenType, String> buildToken = (user, type) ->
             Objects.equals(type, TokenType.ACCESS) ? builder.get()

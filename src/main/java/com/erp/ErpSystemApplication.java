@@ -23,7 +23,7 @@ public class ErpSystemApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(RoleRepository roleRepository) {
 		return args -> {
-			RequestContext.setUserId(0L);
+			/*RequestContext.setUserId(1L);
 
 			var superAdminRole = new RoleEntity();
 			superAdminRole.setName(Authority.SUPER_ADMIN.name());
@@ -63,7 +63,7 @@ public class ErpSystemApplication {
 			var userRole = new RoleEntity();
 			userRole.setName(Authority.USER.name());
 			userRole.setAuthorities(Authority.USER);
-			roleRepository.save(userRole);
+			roleRepository.save(userRole);*/
 
 		};
 	}

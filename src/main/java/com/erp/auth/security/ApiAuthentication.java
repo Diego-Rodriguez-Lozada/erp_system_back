@@ -2,6 +2,7 @@ package com.erp.auth.security;
 
 import com.erp.auth.domain.User;
 import com.erp.constants.Constants;
+import com.erp.exception.ApiException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,7 +15,7 @@ public class ApiAuthentication extends AbstractAuthenticationToken {
     private String password;
     private boolean authenticated;
 
-    public ApiAuthentication(String email, String password) {
+    private ApiAuthentication(String email, String password) {
         super(AuthorityUtils.NO_AUTHORITIES);
         this.email = email;
         this.password = password;
@@ -39,22 +40,22 @@ public class ApiAuthentication extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return Constants.PASSWORD_PROTECTED;
     }
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return this.user;
     }
 
     @Override
     public void setAuthenticated(boolean authenticated) {
-        super.setAuthenticated(authenticated);
+        throw new ApiException("No se pudo establecer la autenticación.");
     }
 
     @Override
     public boolean isAuthenticated() {
-        return super.isAuthenticated();
+        return this.authenticated;
     }
 
     public String getPassword() {

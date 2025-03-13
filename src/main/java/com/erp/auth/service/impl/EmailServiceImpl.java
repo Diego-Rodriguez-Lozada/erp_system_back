@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,13 @@ public class EmailServiceImpl implements EmailService {
     @Async
     public void sendNewAccountEmail(String name, String email, String token) {
         try {
-            var message = new SimpleMailMessage();
-            message.setSubject(Constants.NEW_USER_ACCOUNT_VERIFICATION);
-            message.setFrom(fromEmail);
-            message.setTo(email);
-            message.setText(EmailUtils.getEmailMessage(name, host, token));
-            sender.send(message);
+            var mimeMessage = sender.createMimeMessage();
+            var helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setSubject(Constants.NEW_USER_ACCOUNT_VERIFICATION);
+            helper.setFrom(fromEmail);
+            helper.setTo(email);
+            helper.setText(EmailUtils.getEmailMessage(name, host, token), true);
+            sender.send(mimeMessage);
         } catch (Exception e) {
             throw new ApiException("No se puede enviar el correo electrónico");
         }
@@ -40,12 +42,13 @@ public class EmailServiceImpl implements EmailService {
     @Async
     public void sendResetPasswordEmail(String name, String email, String token) {
         try {
-            var message = new SimpleMailMessage();
-            message.setSubject(Constants.PASSWORD_RESET);
-            message.setFrom(fromEmail);
-            message.setTo(email);
-            message.setText(EmailUtils.getResetPasswordMessage(name, host, token));
-            sender.send(message);
+            var mimeMessage = sender.createMimeMessage();
+            var helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setSubject(Constants.PASSWORD_RESET);
+            helper.setFrom(fromEmail);
+            helper.setTo(email);
+            helper.setText(EmailUtils.getResetPasswordMessage(name, host, token), true);
+            sender.send(mimeMessage);
         } catch (Exception e) {
             throw new ApiException("No se puede enviar el correo electrónico");
         }

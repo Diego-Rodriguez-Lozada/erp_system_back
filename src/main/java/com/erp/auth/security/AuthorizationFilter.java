@@ -6,12 +6,14 @@ import com.erp.auth.domain.TokenData;
 import com.erp.auth.enumeration.TokenType;
 import com.erp.auth.service.JwtService;
 import com.erp.auth.utils.RequestUtils;
+import com.erp.constants.Constants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
@@ -47,9 +50,18 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("doFilterInternal -> {}", e.getMessage());
             RequestUtils.handleErrorResponse(request, response, e);
         }
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        var shouldNotFilter = request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.name()) || Arrays.asList(Constants.PUBLIC_ROUTES).contains(request.getRequestURI());
+        if(shouldNotFilter) {
+            RequestContext.setUserId(1L);
+        }
+        return shouldNotFilter;
     }
 
     private Authentication getAuthentication(String token, HttpServletRequest request) {
